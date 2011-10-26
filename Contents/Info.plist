@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
   <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -18,8 +19,6 @@
 	<array>
 		<string>AAC</string>
 	</array>
-	<key>PlexClientPlatforms</key>
-	<string>MacOSX,iOS,Android,LGTV</string>
 	<key>PlexFrameworkVersion</key>
 	<string>2</string>
 	<key>PlexMediaContainer</key>
