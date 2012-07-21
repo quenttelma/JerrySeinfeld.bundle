@@ -36,17 +36,40 @@ def MainMenu():
   for video in re.finditer('data\("video", ([^\)]+?)\)', page_content):
     video_details = JSON.ObjectFromString(video.groups()[0])
     oc.add(VideoClipObject(
-      url = BASE_URL,
+      key = Callback(Lookup, video_url = video_details['mp4'], title = video_details['title'], thumb = video_details['jpg']),
+      rating_key = video_details['mp4'],
       title = video_details['title'],
       thumb = video_details['jpg'],
       items = [
         MediaObject(
+          container = Container.MP4,
           video_codec = VideoCodec.H264,
           audio_codec = AudioCodec.AAC,
-          protocols = [Protocol.HTTPMP4Video],
+          audio_channels = 2,
           parts = [PartObject(key = video_details['mp4'])]
         )
       ]
     ))
 
+  return oc
+
+###################################################################################################
+
+def Lookup(video_url, title, thumb):
+  oc = ObjectContainer()
+  oc.add(VideoClipObject(
+    key = Callback(Lookup, video_url = video_url),
+    rating_key = video_url,
+    title = title,
+    thumb = thumb,
+    items = [
+      MediaObject(
+        container = Container.MP4,
+        video_codec = VideoCodec.H264,
+        audio_codec = AudioCodec.AAC,
+        audio_channels = 2,
+        parts = [PartObject(key = video_url)]
+      )
+    ]
+  ))
   return oc
